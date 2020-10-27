@@ -10,3 +10,4 @@
 - docker exec -it 容器id /bin/bash
 - mysql safety<safety.sql -uroot -ptodoDream
 
+## 账号 TooBug  密码 123456 

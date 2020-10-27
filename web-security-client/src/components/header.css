@@ -37,3 +37,7 @@ nav .nav-wrapper {
     position: relative;
     height: 100%;
 }
+nav .nav-wrapper .right {
+    float: right;
+    font-size: 18px;
+}

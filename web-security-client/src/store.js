@@ -1,16 +1,14 @@
 import { createStore } from "redux";
 
 //定义state初始化和修改规则,reducer是一个纯函数
-function counterReducer(state = 0, action) {
+function loginReducer(loginInfo = {id: '', username: ''}, action) {
   switch (action.type) {
-    case "ADD":
-      return state + 1;
-    case "MINUS":
-      return state - 1;
+    case "doLogin":
+      return action.loginInfo;
     default:
-      return state;
+      return loginInfo;
   }
 }
-const store = createStore(counterReducer);
+const store = createStore(loginReducer);
 
 export default store;
