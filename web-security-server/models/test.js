@@ -1,11 +1,12 @@
 const mysql = require('mysql')
 const bluebird = require('bluebird');
+console.log(process.env.NODE_ENV)
 
 function getConnection(){
   let connection = mysql.createConnection({
     host: 'localhost',
-    database: 'safety_new',
-    port: '3308',
+    database: (process.env.NODE_ENV === 'production') ? 'safety_new': 'safety',
+    port: (process.env.NODE_ENV === 'production') ? '3308': '3306',
     user: 'root',
     password: 'todoDream'
   });
@@ -26,4 +27,4 @@ async function exec() {
     `);
   console.log(posts)
 }
-exec()
+// exec()
