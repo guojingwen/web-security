@@ -24,6 +24,6 @@ app.use(async function (ctx, next) {
 const router = require('./router')
 app.use(router.routes()).use(router.allowedMethods());
 
-app.listen(8080, function(){
-	console.log('App is listening on port 8080');
+app.listen(10013, function(){
+	console.log('App is listening on port 10013');
 });
