@@ -28,23 +28,17 @@ export default connect(
       value && (sum[key.trim()] = value)
       return sum
     }, {})
-    if(!cookieObj.userId) {
+    ajax({
+      path: '/getLoginInfo',
+    }).then(res => {
+      res.data && this.props.dispatch({
+        type: "doLogin",
+        loginInfo: res.data
+      })
       this.setState({
         hadLoadConfig: true
       })
-    } else {
-      ajax({
-        path: '/getLoginInfo',
-      }).then(res => {
-        this.props.dispatch({
-          type: "doLogin",
-          loginInfo: res.data
-        })
-        this.setState({
-          hadLoadConfig: true
-        })
-      })
-    }
+    })
   }
 
   render() {

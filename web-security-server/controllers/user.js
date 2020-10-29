@@ -12,16 +12,28 @@ exports.doLogin = async function(ctx, next){
 
     const connection = connectionModel.getConnection();
     const query = bluebird.promisify(connection.query.bind(connection));
+
     const results = await query(
       `select * from user where
-			username = '${data.username}'
-			and password = '${data.password}'`
+			username = '${data.username}'`
     );
     if(results.length){
       let user = results[0];
+      let frontPassword = Utils.encryptPassword(user.salt, data.password)
 
-      // 登录成功，设置cookie
-      ctx.cookies.set('userId', user.id, {httpOnly: false/*, sameSite: true*/});
+      if(frontPassword !== user.password) {
+        return ctx.body = {
+          code:  -1,
+          message: '用户名或密码错误'
+        }
+      }
+
+      // 登录成功，设置cookie maxAge
+      // ctx.cookies.set('userId', user.id, {httpOnly: false/*, sameSite: true*/});
+      const sessionKey = Utils.createSessionKey()
+      Utils.setSession(sessionKey, user.id)
+      ctx.cookies.set('session_user', sessionKey, {httpOnly: false/*, sameSite: true*/})
+
       ctx.body = {
         code: 0,
         data: {
@@ -55,12 +67,17 @@ exports.doRegister = async function(ctx, next) {
 
     const connection = connectionModel.getConnection();
     const query = bluebird.promisify(connection.query.bind(connection));
-    const results = await query(`insert into user(username,password,createdAt) values("${data.username}", "${data.password}", ${connection.escape(new Date())})`);
+    const salt =  Utils.getSalt()
+    const password = Utils.encryptPassword(salt, data.password)
+    const results = await query(`insert into user(username, salt, password, createdAt) values("${data.username}", "${salt}", "${password}", ${connection.escape(new Date())})`);
 
-    console.log(results)
     if(results.insertId) {
       // 登录成功，设置cookie
-      ctx.cookies.set('userId', results.insertId, {httpOnly: false/*, sameSite: true*/});
+      // ctx.cookies.set('userId', results.insertId, {httpOnly: false/*, sameSite: true*/});
+      const sessionKey = Utils.createSessionKey()
+      Utils.setSession(sessionKey, results.insertId)
+      ctx.cookies.set('session_user', sessionKey, {httpOnly: false/*, sameSite: true*/})
+
       ctx.body = {
         code: 0,
         data: {
@@ -87,7 +104,12 @@ exports.doRegister = async function(ctx, next) {
 
 exports.getLoginInfo = async function(ctx, next){
   try{
-    const userId = ctx.cookies.get('userId');
+    const userId = getUserId(ctx)
+    if(!userId) return ctx.body = {
+      code: 0,
+      data: null,
+      message: '未登录'
+    }
     const connection = connectionModel.getConnection();
     const query = bluebird.promisify(connection.query.bind(connection));
     const results = await query(
@@ -141,7 +163,6 @@ function validate ({username, password, captcha}, ctx) {
   }
   const key = ctx.cookies.get('captcha')
   const realCaptcha = Utils.getCacheByKey(key)
-  console.log(realCaptcha, captcha)
 
   Utils.delCacheByKey(key)
   if(captcha.toLowerCase() !== realCaptcha) {
@@ -152,3 +173,9 @@ function validate ({username, password, captcha}, ctx) {
   }
   return true
 }
+
+function getUserId (ctx) {
+  const sessionKey = ctx.cookies.get('session_user');
+  return sessionKey && Utils.getSession(sessionKey)
+}
+

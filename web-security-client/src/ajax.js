@@ -22,6 +22,10 @@ export default function({path = throwError(), method = 'GET', headers = {}, data
     .then(response => response.json())
     .then(data => {
       if(data.code !== 0) {
+        if(data.code === -2) {
+          // eslint-disable-next-line no-restricted-globals
+          location.href = '/'
+        }
         showToast(data.message)
         return Promise.reject(data)
       }

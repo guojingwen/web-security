@@ -10,7 +10,7 @@
 - docker exec -it 容器id /bin/bash
 - mysql safety<safety.sql -uroot -ptodoDream
 
-## 账号 TooBug  密码 123456 
+## 账号 guojw  密码 123456 或者注册一个也行 
 
 ### web漏洞
  -[ ] XSS，演示不了只能在服务端渲染页面才能演示, 参考老项目

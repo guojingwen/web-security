@@ -2,6 +2,7 @@ import React from 'react'
 import ajax from '../ajax'
 import { connect } from "react-redux";
 import Config from '../config'
+import md5 from 'js-md5'
 
 export default connect(
   userInfo => ({ userInfo }),
@@ -50,7 +51,7 @@ export default connect(
       method: 'POST',
       data: {
         username,
-        password,
+        password: encrypt(username, password),
         captcha: captcha.trim()
       }
     }).then(res => {
@@ -72,7 +73,7 @@ export default connect(
       method: 'POST',
       data: {
         username,
-        password,
+        password: encrypt(username, password), // 前端加密也存在一定意义
         captcha: captcha.trim()
       }
     }).then(res => {
@@ -131,3 +132,7 @@ export default connect(
     </div>
   }
 })
+
+function encrypt(username, password) {
+  return md5(username + '!$$@@#%dasd@$' + password)
+}

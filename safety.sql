@@ -94,6 +94,7 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(32) NOT NULL DEFAULT '',
+  `salt` varchar(32) NOT NULL DEFAULT '',
   `password` varchar(64) NOT NULL DEFAULT '',
   `createdAt` timestamp NULL DEFAULT NULL,
   `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -103,10 +104,9 @@ CREATE TABLE `user` (
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 
-INSERT INTO `user` (`id`, `username`, `password`, `createdAt`, `updatedAt`)
+INSERT INTO `user` (`id`, `username`, `salt`,`password`, `createdAt`, `updatedAt`)
 VALUES
-	(1,'TooBug','123456','2017-04-07 10:47:04','2017-05-16 01:23:54'),
-	(2,'兔九妹','123456','2017-05-07 18:00:00','2017-05-07 09:20:29');
+	(1,'guojw', '252fc5a644c289f83e62d36e0d3b0a06', '94fda721fbdb4fce5b2007e7f1747bbe','2020-10-29 20:01:51','2020-10-29 20:01:51');
 
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;

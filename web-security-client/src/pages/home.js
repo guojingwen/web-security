@@ -30,11 +30,11 @@ export default class extends PureComponent {
       <div className="container">
         <div className="row section indexBody">
           <div className="col s8">
-            {posts.length && (
+            {posts.length ? (
               <Link to={`/post/${posts[0].id}`}>
                 <img className="responsive-img cover" src={posts[0].imgUrl} alt=""/>
               </Link>
-            )}
+            ): '加载中。。。'}
             <ul className="section">
               {posts.map(item => (<PostItem item={item} key={item.id}></PostItem>))}
             </ul>
