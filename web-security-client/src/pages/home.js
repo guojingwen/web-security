@@ -2,6 +2,7 @@ import React, {PureComponent} from "react";
 import Header from "../components/header";
 import ajax from '../ajax'
 import {Link} from 'react-router-dom'
+import FilterXSS from 'xss'
 
 export default class extends PureComponent {
   constructor(props) {
@@ -19,12 +20,9 @@ export default class extends PureComponent {
           comments: data.comments
         })
       })
+    // console.log(FilterXSS('<script>console.log(1234)</script>'))
   }
-  // onClick={this.go.bind(this)} // 手动路由跳转的方式
-  // go() {
-  //   const history = this.props.history
-  //   history.push('/post/123')
-  // }
+
   render() {
     const {posts, comments} = this.state
     return (<div className="indexWrapper">
@@ -81,7 +79,7 @@ class CommentItem extends PureComponent {
     return <li>
       <div>
         <div className="nick">{`${item.username || '匿名用户'} ${new Date(item.createdAt).toISOString().replace(/T.*/,'')}`}</div>
-        <div className="commentContent" dangerouslySetInnerHTML={{__html: item.content}}></div>
+        <div className="commentContent" dangerouslySetInnerHTML={{__html: FilterXSS(item.content)}}></div>
         <div className="info">
           文章
           <Link to={`/post/${item.postId}`}>

@@ -1,6 +1,7 @@
-const baseUrl = 'http://localhost:8080/api'
+import Config from  './config'
+
 export default function({path = throwError(), method = 'GET', headers = {}, data = {}} = throwError('参数')) {
-  let url = baseUrl + path
+  let url = Config.baseUrl + path
   const options = {
     method,
     credentials: "include", // include, same-origin, omit
@@ -21,12 +22,13 @@ export default function({path = throwError(), method = 'GET', headers = {}, data
     .then(response => response.json())
     .then(data => {
       if(data.code !== 0) {
-        console.log(data.message)
+        showToast(data.message)
         return Promise.reject(data)
       }
       return Promise.resolve(data)
     }, (err) => {
-      console.log("请检查网络链接" + err);
+      showToast("请检查网络链接")
+      console.error(err)
       return Promise.reject(data)
     })
 }

@@ -19,6 +19,14 @@
  -[ ] 网络窃听，nginx配置https即可
  -[ ] 密码是明文
  -[ ] 存在sql注入风险
+ 
+ ### web漏洞修复
+ -[X] XSS，前后端使用xss处理富文本
+ -[X] csrf 验证码
+ -[X] 点击劫持  nginx 配置 add_header X-Frame-Options SAMEORIGIN
+ -[X] 网络窃听，nginx配置https即可
+ -[X] 密码是明文 登录使用session 密码加密加盐
+ -[X] 存在sql注入风险 后段错误统一封装不吐给前端
 
  
  

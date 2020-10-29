@@ -4,9 +4,11 @@ import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import Post from "./pages/post";
 import UserLogin from "./pages/user-login";
 import Home from "./pages/home";
+import showToast from './components/toast'
 import 'materialize-css/dist/css/materialize.css'
 import './main.css';
 import ajax from './ajax'
+window.showToast = showToast
 
 export default connect(
   userInfo => ({ userInfo }),
@@ -18,6 +20,9 @@ export default connect(
     }
   }
   componentDidMount() {
+    // eslint-disable-next-line no-restricted-globals
+    if(top.location !== self.location) return // 不允许内嵌在iframe中
+
     const cookieObj = document.cookie.split(';').reduce((sum, item) => {
       let [key, value] = item.split('=')
       value && (sum[key.trim()] = value)
@@ -47,6 +52,7 @@ export default connect(
           <Switch>
             <Route path="/post/:postId" component={Post}></Route>
             <Route path="/user/login" component={UserLogin}></Route>
+            <Route path="/user/register" component={UserLogin}></Route>
             <Route path="/" component={Home}></Route>
             <Route component={EmptyPage} />
           </Switch>

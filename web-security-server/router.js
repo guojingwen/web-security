@@ -8,7 +8,9 @@ router.get('/index', controllers.index);
 router.get('/post/:id', controllers.post);
 router.post('/post/addComment', controllers.addComment);
 router.post('/doLogin', controllers.doLogin)
+router.post('/doRegister', controllers.doRegister)
 router.get('/getLoginInfo', controllers.getLoginInfo)
+router.get('/getCaptcha', controllers.getCaptcha)
 
 
 

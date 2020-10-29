@@ -12,10 +12,14 @@
   "dependencies": {
     "@koa/router": "^9.4.0",
     "bluebird": "^3.7.2",
+    "cookie-parser": "^1.4.5",
     "koa": "^2.13.0",
     "koa-bodyparser": "^4.3.0",
+    "koa-session": "^6.1.0",
     "koa2-cors": "^2.0.6",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "svg-captcha": "^1.4.0",
+    "xss": "^1.0.8"
   },
   "devDependencies": {
     "nodemon": "^2.0.6"
