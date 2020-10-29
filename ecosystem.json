@@ -1,0 +1,29 @@
+{
+  "apps": [
+    {
+      "name": "web-security",
+      "script": "server.js",
+      "env": {
+        "COMMON_VARIABLE": "true"
+      },
+      "env_production": {
+        "NODE_ENV": "production"
+      }
+    }
+  ],
+  "deploy": {
+    "production": {
+      "user": "zjy",
+      "host": ["58.240.35.228"],
+      "port": "22",
+      "ref": "origin/master",
+      "repo": "git@github.com:guojingwen/web-security.git",
+      "path": "/disk/c/gjw/website/web-security",
+      "ssh_options": "StrictHostKeyChecking=no",
+      "env": {
+        "NODE_ENV": "production"
+      },
+      "post-deploy": "echo '需要手动登录服务器install + start'"
+    }
+  }
+}

@@ -23,11 +23,6 @@ export default connect(
     // eslint-disable-next-line no-restricted-globals
     if(top.location !== self.location) return // 不允许内嵌在iframe中
 
-    const cookieObj = document.cookie.split(';').reduce((sum, item) => {
-      let [key, value] = item.split('=')
-      value && (sum[key.trim()] = value)
-      return sum
-    }, {})
     ajax({
       path: '/getLoginInfo',
     }).then(res => {
