@@ -1,5 +1,6 @@
 const svgCaptcha = require('svg-captcha');
 const Utils = require('../utils')
+const cookieOptions = (process.env.NODE_ENV === 'production') ? {httpOnly: true, sameSite: true} : {httpOnly: false, sameSite: false}
 
 // 获取验证码
 exports.getCaptcha = async function(ctx, next){
@@ -20,7 +21,7 @@ exports.getCaptcha = async function(ctx, next){
   const key = new Date().getTime() + parseInt(Math.random().toString() * 10000)
   Utils.setCacheByKey(key, captcha.text.toLowerCase()) // // 生成的验证码
   // 保存到cookie 方便前端调用验证
-  ctx.cookies.set('captcha', key, {httpOnly: false/*, sameSite: true*/});
+  ctx.cookies.set('captcha', key, cookieOptions);
   ctx.type = 'image/svg+xml'
   // ctx.set('cache-control', `private, max-age=3600`);
   ctx.body = String(captcha.data)

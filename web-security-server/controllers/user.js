@@ -1,6 +1,7 @@
 const connectionModel = require('../models/connection');
 const bluebird = require('bluebird');
 const Utils = require('../utils')
+const cookieOptions = (process.env.NODE_ENV === 'production') ? {httpOnly: true, sameSite: true} : {httpOnly: false, sameSite: false}
 
 exports.doLogin = async function(ctx, next){
   try{
@@ -32,7 +33,7 @@ exports.doLogin = async function(ctx, next){
       // ctx.cookies.set('userId', user.id, {httpOnly: false/*, sameSite: true*/});
       const sessionKey = Utils.createSessionKey()
       Utils.setSession(sessionKey, user.id)
-      ctx.cookies.set('session_user', sessionKey, {httpOnly: false/*, sameSite: true*/})
+      ctx.cookies.set('session_user', sessionKey, cookieOptions)
 
       ctx.body = {
         code: 0,
@@ -76,7 +77,7 @@ exports.doRegister = async function(ctx, next) {
       // ctx.cookies.set('userId', results.insertId, {httpOnly: false/*, sameSite: true*/});
       const sessionKey = Utils.createSessionKey()
       Utils.setSession(sessionKey, results.insertId)
-      ctx.cookies.set('session_user', sessionKey, {httpOnly: false/*, sameSite: true*/})
+      ctx.cookies.set('session_user', sessionKey, cookieOptions)
 
       ctx.body = {
         code: 0,

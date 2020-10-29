@@ -17,6 +17,7 @@
  -[ ] csrf 打开other/csrf.html
  -[ ] 点击劫持 打开 other/clickhijack.html
  -[ ] 网络窃听，nginx配置https即可
+ -[ ] 用户id直接存放到cookie里
  -[ ] 密码是明文
  -[ ] 存在sql注入风险
  
@@ -25,6 +26,7 @@
  -[X] csrf 验证码
  -[X] 点击劫持  nginx 配置 add_header X-Frame-Options SAMEORIGIN
  -[X] 网络窃听，nginx配置https即可
+ -[X] 用户信息使用session改造
  -[X] 密码是明文 登录使用session 密码加密加盐
  -[X] 存在sql注入风险 后段错误统一封装不吐给前端
 
