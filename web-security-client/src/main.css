@@ -53,3 +53,18 @@ img.cover{
 .postTitle{
 	text-align: center;
 }
+
+@media screen and (max-width: 420px){
+	.indexBody .col.s8, .indexBody .col.s4{
+		width: 100%;
+	}
+	.indexBody .postWrapper .col.s4, .indexBody .postWrapper .col.s8 {
+		width: 50%;
+	}
+	.loginWrapper .row .col.offset-s3 {
+		margin-left: 0;
+	}
+	.loginWrapper .row .col.s6 {
+		width: 100%;
+	}
+}
