@@ -1,3 +1,4 @@
+import 'whatwg-fetch'
 import Config from  './config'
 
 export default function({path = throwError(), method = 'GET', headers = {}, data = {}} = throwError('参数')) {
