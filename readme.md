@@ -9,13 +9,13 @@
 - docker pull mysql:5.5
 - docker run docker run -p 3306:3306 --name mysql5.5 -e MYSQL_ROOT_PASSWORD=todoDream -d mysql:5.5
 - docker exec -it 容器id /bin/bash
-- mysql -uroot -pc
-- create database safety
+- mysql -uroot -ptodoDream
+- create database safety_new
 - exit
 - exit
 - docker cp safety.sql 容器ID:/
 - docker exec -it 容器id /bin/bash
-- mysql safety<safety.sql -uroot -ptodoDream
+- mysql safety_new<safety.sql -uroot -ptodoDream
 
 ## 账号 guojw  密码 123456 或者注册一个也行 
 
